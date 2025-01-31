@@ -1,12 +1,19 @@
 <template>
-    <div>
-        <h1 class="text-red-200">Hello sur WallSocket</h1>
-
-<UserPen />
+    <div class="h-screen flex ">
+        <div 
+        ref="toolbarRef"
+        class="w-[35%]">
+            <ToolbarComponent />
+        </div>
+           
+        <div class="flex-1 border-2 border-blue-500">
+            <CanvasComponent />
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import {UserPen} from 'lucide-vue-next';
+import ToolbarComponent from './ToolbarComponent.vue';
+import CanvasComponent from './CanvasComponent.vue';
 
 </script>
