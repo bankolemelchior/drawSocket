@@ -6,7 +6,7 @@
             <ToolbarComponent />
         </div>
            
-        <div class="flex-1 border-2 border-blue-500">
+        <div class="flex-1 border-l-2 border-blue-500">
             <CanvasComponent />
         </div>
     </div>
