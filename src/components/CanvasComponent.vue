@@ -74,7 +74,8 @@ const draw = (e: MouseEvent) => {
     }
     if(!lastPoint.value) return;
     drawLine(ctx, lastPoint.value, currentPoint, drawingStore.color, drawingStore.lineWidth, drawingStore.isEraser);
-    socketStore.emit('draw', {
+    //le client emet l'évenement draw, qui sera écouté par le serveur
+    socketStore.sender('draw', {
         points: [lastPoint.value, currentPoint],
         color: drawingStore.color,
         lineWidth: drawingStore.lineWidth,
@@ -85,19 +86,21 @@ const draw = (e: MouseEvent) => {
 }
 
 onMounted(() => {
+    const canvas = canvasRef.value;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if(!ctx) return;
     socketStore.connect();
 
-    //Ecoute de l'évenement draw venant du serveur
-    socketStore.socket?.on('draw', (data) => {
-        console.log(data);
+    //Ecoute de l'évenement serverDraw venant du serveur
+    socketStore.socket?.on('serverDraw', ({points, color, lineWidth, isEraser}) => {
+        drawLine(ctx, points[0], points[1], color, lineWidth, isEraser);
         
     })
     window.addEventListener('resize', resizeCanvas);
     
     resizeCanvas();
-    const canvas = canvasRef.value;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    
 
     
 })

@@ -7,7 +7,11 @@ import {Server} from 'socket.io';
 const port = 9100;
 const app = express();
 const serverHttp = createServer(app)
-const io = new Server(serverHttp) //server de websocket
+const io = new Server(serverHttp, {
+    cors: {
+        origin: true
+    }
+}) //server de websocket
 //chemin du fichier serveur en cours d'execution
 const __fileName = fileURLToPath(import.meta.url);
 //dossier parent du fichier server
@@ -20,9 +24,7 @@ io.on('connection', (socket) => {
     console.log("Nouvelle connexion", socket.id);
 
     socket.on('draw', (data) => {
-        socket.broadcast.emit('draw', {
-            data
-        })
+        socket.broadcast.emit('serverDraw', {...data})
     })
 } )
 

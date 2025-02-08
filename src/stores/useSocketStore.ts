@@ -14,7 +14,7 @@ export const useSocketStore = defineStore('socket', {
             })
         },
 
-        emit(event:string, data: any) {
+        sender(event:string, data: any) {
             if(!this.socket) return;
             this.socket.emit(event, data);
         }
